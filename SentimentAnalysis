@@ -1,0 +1,40 @@
+import tkinter
+from textblob import TextBlob
+
+m = tkinter.Tk()
+
+def output(arg=None):
+    val = entry.get()
+    obj = TextBlob(val)
+    degree = obj.polarity
+    if (degree > 0):
+        msg = '\n  its a positive content\n\n  Positive accuracy = '
+        print('its a positive content')
+        per = degree / 1 * 100
+        print('Positive accuracy = ', per)
+        result = msg + str(per)
+    elif (degree < 0):
+        msg = '\n  its a negative content\n\n  Negative accuracy = '
+        print('its a negative content')
+        per = -1 * degree / 1 * 100
+        print('Negative accuracy = ', per,'%')
+        result = msg + str(per)
+    elif (degree == 0):
+        print('Neutral')
+    out = obj.sentiment_assessments
+    print(out)
+    textOutput = tkinter.Text(height=15, width=55)
+    textOutput.pack()
+    textOutput.place(x=360, y=40)
+    textOutput.insert(tkinter.END, result)
+
+
+label = tkinter.Label(text='Enter Your Comment').place(x=30, y=50)
+entry = tkinter.Entry()
+entry.place(x=30, y=80)
+txt = tkinter.Text(width=55, height=15).place(x=360, y=40)
+button1 = tkinter.Button(text='Analyze', command=output, height=3, width=18).place(x=30, y=290)
+button2 = tkinter.Button(text='EXIT', command=m.destroy, height=3, width=18).place(x=200, y=290)
+
+m.geometry("850x425+250+80")  # Width x Height + left + top
+m.mainloop()
