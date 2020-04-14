@@ -20,42 +20,42 @@ def mainProgram():
     # file in read mode and only Text Files will be opened
     def open_file():
         file = askopenfile(mode ='r', filetypes =[('Text Files', '*.txt')])
-        if file != '':
-            fileContent = file.read()
-            print(fileContent)
-        else:
-            print('No file Selected')
+        fileContent = file.read()
+        # print(fileContent)
         textOutputFile = scrolledtext.ScrolledText(m, width=60)
         textOutputFile.place(height=300, x=15, y=80)
         textOutputFile.config(foreground="black", wrap='word')
         textOutputFile.insert(tkinter.END, fileContent)
 
         def fileOutput(arg=None):
-            if fileContent != '':
-                obj = TextBlob(fileContent)
-                degree = obj.polarity
-                if (degree > 0):
-                    msg = '\n>> its a positive content\n\n>> Positive accuracy = '
-                    print('its a positive content')
-                    per = degree / 1 * 100
-                    print('Positive accuracy = ', per)
-                    fileResult = msg + str(per)
-                elif (degree < 0):
-                    msg = '\n>> its a negative content\n\n>> Negative accuracy = '
-                    print('its a negative content')
-                    per = -1 * degree / 1 * 100
-                    print('Negative accuracy = ', per, '%')
-                    fileResult = msg + str(per)
-                elif (degree == 0.0):
-                    msg = '\n>> its a neutral content\n\n>> Hence its polarity is Zero'
-                    print('Neutral')
-                    fileResult = msg
-                out = obj.sentiment_assessments
-                print(out)
-                textOutput = scrolledtext.ScrolledText(m, width=36, height=11)
-                textOutput.place(x=526, y=80)
-                textOutput.config(foreground="black", wrap='word')  # background="light grey", , font='times 12 bold'
-                textOutput.insert(tkinter.END, fileResult)
+            obj = TextBlob(fileContent)
+            degree = obj.polarity
+            if (degree > 0):
+                msg = '\n>> its a positive content\n\n>> Positive accuracy = '
+                print('its a positive content')
+                per = degree / 1 * 100
+                print('Positive accuracy = ', per)
+                fileResult = msg + str(per)
+            elif (degree < 0):
+                msg = '\n>> its a negative content\n\n>> Negative accuracy = '
+                print('its a negative content')
+                per = -1 * degree / 1 * 100
+                print('Negative accuracy = ', per, '%')
+                fileResult = msg + str(per)
+            elif (degree == 0.0):
+                msg = '\n>> its a neutral content\n\n>> Hence its polarity is Zero'
+                print('Neutral')
+                fileResult = msg
+            out = obj.sentiment_assessments
+            print(out)
+            # textOutput = scrolledtext.ScrolledText(m, width=36, height=11)
+            # textOutput.place(x=526, y=80)
+            # textOutput.config(foreground="black", wrap='word')  # background="light grey", , font='times 12 bold'
+            # textOutput.insert(tkinter.END, fileResult)
+            textOutput = tkinter.Text(width=38, height=11, bg='#000000', fg='#ffffff')
+            textOutput.place(x=526, y=80)
+            textOutput.config(wrap='word')
+            textOutput.insert(tkinter.END, fileResult)
 
         analyzeButton = tkinter.Button(text='Analyze', command=fileOutput)
         analyzeButton.place(x=530, y=350)
@@ -92,25 +92,34 @@ def mainProgram():
                 result = msg
             out = obj.sentiment_assessments
             print(out)
-            textOutput = scrolledtext.ScrolledText(m, width=36, height=11)
+            textOutput = tkinter.Text(width=38, height=11, bg='#000000', fg='#ffffff')
             textOutput.place(x=526, y=80)
-            textOutput.config(foreground="black", wrap='word')  # background="light grey", , font='times 12 bold'
+            textOutput.config(wrap='word')
             textOutput.insert(tkinter.END, result)
+            # textOutput = scrolledtext.ScrolledText(m, width=36, height=11)
+            # textOutput.place(x=526, y=80)
+            # textOutput.config(foreground="black", wrap='word')  # background="light grey", , font='times 12 bold'
+            # textOutput.insert(tkinter.END, result)
         else:
             errorMessage()
 
-    label = tkinter.Label(text='  ***Sentiment Analyzer***  ',  bg='#0052cc', fg='#ffffff')
+    label = tkinter.Label(text='***SENTIMENT ANALYZER***', fg='#ffffff', bg='#0CCBFA')
     label.place(x=190, y=20)
-    lableFont = font.Font(family='Courier', size=22, weight='bold')
+    lableFont = font.Font(family='Courier', size=24, weight='bold')
     label['font'] = lableFont
 
     mainScrollText = scrolledtext.ScrolledText(m, width=60)
     mainScrollText.place(height=300, x=15, y=80)
     mainScrollText.config(foreground="black", wrap='word')
+    #mainScrollText.insert(tkinter.INSERT, "\n>> Enter Your Sample Text For Its Sentiment Analysis")
 
-    outputBoxForShow = scrolledtext.ScrolledText(m, width=36, height=11)
+    # outputBoxForShow = scrolledtext.ScrolledText(m, width=36, height=11, bg='#000000')
+    # outputBoxForShow.place(x=526, y=80)
+    # outputBoxForShow.config(foreground="white", wrap='word')
+    # outputBoxForShow.insert(tkinter.INSERT, ">> CONSOLE")
+    outputBoxForShow = tkinter.Text(width=38, height=11, bg='#000000', fg='#ffffff')
     outputBoxForShow.place(x=526, y=80)
-    outputBoxForShow.config(foreground="black", wrap='word')
+    outputBoxForShow.insert(tkinter.INSERT, '\n>> CONSOLE \n\n>> YOUR OUTPUT WILL BE SHOWN HERE')
 
     analyzeButton = tkinter.Button(text='Analyze', command=output)
     analyzeButton.place(x=530, y=350)
@@ -128,8 +137,9 @@ def mainProgram():
     exitButton['font'] = exitButtonFont
 
     m.title("Sentiment Analyzer")
-    m.configure(background='ivory3')
+    m.configure(background='#0CCBFA')
     m.geometry("850x425+250+80")  # Width x Height + left + top
+    m.resizable(0, 0)  #Don't allow resizing in the x or y direction
     m.mainloop()
 
 mainProgram()
